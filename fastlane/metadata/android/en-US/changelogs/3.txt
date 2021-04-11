@@ -1,0 +1,1 @@
+refactored code, used some better practices, cleaned up appearance a bit, changed from monthly to weekly budgeting, and more.
