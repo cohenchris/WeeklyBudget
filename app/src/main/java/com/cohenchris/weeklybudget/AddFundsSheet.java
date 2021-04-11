@@ -56,12 +56,15 @@ public class AddFundsSheet extends BottomSheetDialogFragment {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    long toAdd = Long.parseLong(fundsToAdd.getText().toString().replaceAll(",", "."));
-                    long curr = sharedPreferences.getLong(CURR_BALANCE, (long) 0.00);
-                    long newBalance = curr + toAdd;
+                    System.out.println(fundsToAdd.getText().toString().replaceAll(",", "."));
+
+
+                    double toAdd = Double.parseDouble(fundsToAdd.getText().toString().replaceAll(",", "."));
+                    double curr = Double.longBitsToDouble(sharedPreferences.getLong(CURR_BALANCE, (long) 0.00));
+                    double newBalance = curr + toAdd;
                     amount.setText(dollarFormat.format(newBalance));
 
-                    editor.putLong(CURR_BALANCE, newBalance);
+                    editor.putLong(CURR_BALANCE, Double.doubleToRawLongBits(newBalance));
                     editor.apply();
                 }catch(NumberFormatException exception){
                     new AlertDialog.Builder(v.getContext())

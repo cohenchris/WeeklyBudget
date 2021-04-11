@@ -54,7 +54,7 @@ public class SetBudgetSheet extends BottomSheetDialogFragment {
                 }
                 try {
                     // replace old budget with newly entered one
-                    long newBudget = Long.parseLong(budgetEditText.getText().toString().replaceAll(",", "."));
+                    double newBudget = Double.parseDouble(budgetEditText.getText().toString().replaceAll(",", "."));
                     budget.setText(dollarFormat.format(newBudget));
 
                     // Get the current week number
@@ -67,9 +67,9 @@ public class SetBudgetSheet extends BottomSheetDialogFragment {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     // update balance in the sharedPreferences
-                    editor.putLong(CURR_BUDGET, newBudget);
+                    editor.putLong(CURR_BUDGET, Double.doubleToRawLongBits(newBudget));
                     // overwrite current balance with the newly updated budget
-                    editor.putLong(CURR_BALANCE, newBudget);
+                    editor.putLong(CURR_BALANCE, Double.doubleToRawLongBits(newBudget));
 
                     editor.putInt(WEEK, week_name);
                     editor.apply();

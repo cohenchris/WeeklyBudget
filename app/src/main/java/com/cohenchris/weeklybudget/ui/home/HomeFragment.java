@@ -76,8 +76,8 @@ public class HomeFragment extends Fragment {
         calendar.setTime(trialTime);
         int currWeek = Calendar.WEEK_OF_YEAR;
         
-        long curr_balance = sharedPreferences.getLong(CURR_BALANCE, (long) 0.00);
-        long curr_budget = sharedPreferences.getLong(CURR_BUDGET, (long) 0.00);
+        double curr_balance = Double.longBitsToDouble(sharedPreferences.getLong(CURR_BALANCE, (long) 0.00));
+        double curr_budget = Double.longBitsToDouble(sharedPreferences.getLong(CURR_BUDGET, (long) 0.00));
 
         // add (budget * num weeks passed) to available funds
         curr_balance += (curr_budget * (currWeek - lastWeek));

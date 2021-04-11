@@ -63,7 +63,7 @@ public class DashboardFragment extends Fragment {
         Locale usa = new Locale("en", "US");
         final NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(usa);
 
-        long currBudget = sharedPreferences.getLong(CURR_BUDGET, (long) 0.00);
+        double currBudget = Double.longBitsToDouble(sharedPreferences.getLong(CURR_BUDGET, (long) 0.00));
         currentBudget.setText(dollarFormat.format(currBudget));
     }
 }
