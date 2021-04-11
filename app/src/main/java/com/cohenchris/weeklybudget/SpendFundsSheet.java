@@ -1,4 +1,4 @@
-package com.lako.walletcount;
+package com.cohenchris.weeklybudget;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,18 +16,20 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
+
 public class SpendFundsSheet extends BottomSheetDialogFragment {
     private TextInputEditText fundsToRemove;
     private TextView amount;
     private Button spendFunds;
     private TextView budget;
 
-    private String text;
-    private String textbudget;
+    private String curr_balance;
 
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
-    public static final String TEXTBUDGET = "textbudget";
+    public static final String CURR_BALANCE = "currBalance";
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setStyle(STYLE_NORMAL, R.style.BottomSheet);
         View view = inflater.inflate(R.layout.spend_funds_bottomsheet, container, false);
@@ -37,7 +39,11 @@ public class SpendFundsSheet extends BottomSheetDialogFragment {
         amount = getActivity().findViewById(R.id.textView);
         budget = getActivity().findViewById(R.id.textView7);
         fundsToRemove = view.findViewById(R.id.inputText);
-        textbudget = sharedPreferences.getString(TEXTBUDGET, "0.00");
+
+        // Create US currency locale
+        Locale usa = new Locale("en", "US");
+        final NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(usa);
+
         spendFunds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,20 +51,17 @@ public class SpendFundsSheet extends BottomSheetDialogFragment {
                     fundsToRemove.setText("0");
                 }
                 try {
-                    double num1 = Double.parseDouble(fundsToRemove.getText().toString().replaceAll(",", "."));
-                    double num2 = Double.parseDouble(amount.getText().toString().replaceAll(",", "."));
-                    double num3 = Double.parseDouble(textbudget.replaceAll(",", "."));
-                    double budgetsum = num3 - num1;
-                    double sum = num2 - num1;
-                    textbudget = String.format("%.2f", budgetsum);
-                    amount.setText(String.format("%.2f", sum));
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    editor.putString(TEXT, amount.getText().toString());
-                    editor.putString(TEXTBUDGET, textbudget);
+                    long toRemove = Long.parseLong(fundsToRemove.getText().toString().replaceAll(",", ".").replaceAll("$", ""));
+                    long curr = sharedPreferences.getLong(CURR_BALANCE, (long) 0.00);
+                    long newBalance = curr - toRemove;
+                    amount.setText(dollarFormat.format(newBalance));
+
+                    editor.putLong(CURR_BALANCE, newBalance);
                     editor.apply();
-                }catch(NumberFormatException exception){
+                } catch(NumberFormatException exception) {
                     new AlertDialog.Builder(v.getContext())
                             .setTitle("Error")
                             .setMessage("Invalid number was entered.")

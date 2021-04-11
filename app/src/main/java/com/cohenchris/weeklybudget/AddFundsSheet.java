@@ -1,4 +1,4 @@
-package com.lako.walletcount;
+package com.cohenchris.weeklybudget;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +19,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 
 public class AddFundsSheet extends BottomSheetDialogFragment {
     private TextInputEditText fundsToAdd;
@@ -28,7 +31,7 @@ public class AddFundsSheet extends BottomSheetDialogFragment {
     private String text;
 
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
+    public static final String CURR_BALANCE = "currBalance";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,20 +41,27 @@ public class AddFundsSheet extends BottomSheetDialogFragment {
         addFunds = view.findViewById(R.id.button);
         amount = getActivity().findViewById(R.id.textView);
         fundsToAdd = view.findViewById(R.id.textInputEditText2);
+
+        // Create US currency locale
+        Locale usa = new Locale("en", "US");
+        final NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(usa);
+
         addFunds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fundsToAdd.getText().toString().length() == 0){
+                if(fundsToAdd.getText().toString().length() == 0) {
                     fundsToAdd.setText("0");
                 }
                 try {
-                    double num1 = Double.parseDouble(fundsToAdd.getText().toString().replaceAll(",", "."));
-                    double num2 = Double.parseDouble(amount.getText().toString().replaceAll(",", "."));
-                    double sum = num1 + num2;
-                    amount.setText(String.format("%.2f", sum));
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(TEXT, amount.getText().toString());
+
+                    long toAdd = Long.parseLong(fundsToAdd.getText().toString().replaceAll(",", "."));
+                    long curr = sharedPreferences.getLong(CURR_BALANCE, (long) 0.00);
+                    long newBalance = curr + toAdd;
+                    amount.setText(dollarFormat.format(newBalance));
+
+                    editor.putLong(CURR_BALANCE, newBalance);
                     editor.apply();
                 }catch(NumberFormatException exception){
                     new AlertDialog.Builder(v.getContext())

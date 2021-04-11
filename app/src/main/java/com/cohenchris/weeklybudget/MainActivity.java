@@ -1,4 +1,4 @@
-package com.lako.walletcount;
+package com.cohenchris.weeklybudget;
 
 import android.os.Bundle;
 import android.view.View;

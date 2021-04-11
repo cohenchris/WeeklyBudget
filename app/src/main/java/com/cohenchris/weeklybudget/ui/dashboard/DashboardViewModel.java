@@ -1,4 +1,4 @@
-package com.lako.walletcount.ui.dashboard;
+package com.cohenchris.weeklybudget.ui.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

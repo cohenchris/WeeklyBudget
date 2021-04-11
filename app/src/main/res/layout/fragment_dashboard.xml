@@ -23,49 +23,37 @@
         android:id="@+id/button5"
         android:layout_width="200dp"
         android:layout_height="87dp"
-        android:layout_marginTop="36dp"
-        android:text="Adjust Budget"
+        android:text="Change Budget"
         app:icon="@drawable/ic_attach_money_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="84dp"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:text="Good work! " />
+        tools:text="Current Weekly Budget" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="4dp"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
-        tools:text="You are under your budget!" />
-
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="327dp"
-        android:layout_height="308dp"
-        android:max="100"
-        android:progress="100"
-        android:progressDrawable="@drawable/progress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="-3dp" />
-
+        tools:text="comment" />
 </androidx.constraintlayout.widget.ConstraintLayout>

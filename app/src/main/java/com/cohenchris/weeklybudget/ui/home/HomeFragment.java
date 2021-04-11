@@ -1,4 +1,4 @@
-package com.lako.walletcount.ui.home;
+package com.cohenchris.weeklybudget.ui.home;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,17 +15,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.lako.walletcount.AddFundsSheet;
-import com.lako.walletcount.R;
-import com.lako.walletcount.SpendFundsSheet;
+import com.cohenchris.weeklybudget.AddFundsSheet;
+import com.cohenchris.weeklybudget.R;
+import com.cohenchris.weeklybudget.SpendFundsSheet;
+
+import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.Currency;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
-    private String text;
-    private TextView amount;
+    private TextView currentBalanceView;
 
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
+    public static final String CURR_BALANCE = "currBalance";
+    public static final String CURR_BUDGET = "currBudget";
+    public static final String WEEK = "weekOfBudget";
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,7 +41,7 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        amount = root.findViewById(R.id.textView);
+        currentBalanceView = root.findViewById(R.id.textView);
         final Button addFundsButton = root.findViewById(R.id.button2);
         final Button spendFundsButton = root.findViewById(R.id.button3);
         addFundsButton.setOnClickListener(new View.OnClickListener() {
@@ -50,19 +58,36 @@ public class HomeFragment extends Fragment {
                 spendFundsDialog.show(getActivity().getSupportFragmentManager(), "spendFundsDialogBox");
             }
         });
+
         loadData();
-        updateViews();
+
         return root;
     }
 
-    public void loadData(){
+    public void loadData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        text = sharedPreferences.getString(TEXT, "0.00");
-    }
+        // Determine whether or not to increase budget (if it's a new week)
+        int lastWeek = sharedPreferences.getInt(WEEK, -1);
 
-    public void updateViews(){
-        amount.setText(text);
+        // Get the current week number
+        Calendar calendar = new GregorianCalendar();
+        Date trialTime = new Date();
+        calendar.setTime(trialTime);
+        int currWeek = Calendar.WEEK_OF_YEAR;
+        
+        long curr_balance = sharedPreferences.getLong(CURR_BALANCE, (long) 0.00);
+        long curr_budget = sharedPreferences.getLong(CURR_BUDGET, (long) 0.00);
+
+        // add (budget * num weeks passed) to available funds
+        curr_balance += (curr_budget * (currWeek - lastWeek));
+
+        // Create US currency locale
+        Locale usa = new Locale("en", "US");
+        final NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(usa);
+
+        // update current balance
+        currentBalanceView.setText(dollarFormat.format(curr_balance));
+
     }
 }

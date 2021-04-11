@@ -1,4 +1,4 @@
-package com.lako.walletcount.ui.notifications;
+package com.cohenchris.weeklybudget.ui.notifications;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.lako.walletcount.R;
+import com.cohenchris.weeklybudget.R;
 
 public class NotificationsFragment extends Fragment {
 
