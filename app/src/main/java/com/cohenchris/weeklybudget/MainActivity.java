@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
         navView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        // Is it Sunday? If so, add weekly budget to current funds available.
     }
 
 }

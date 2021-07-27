@@ -58,10 +58,8 @@ public class SetBudgetSheet extends BottomSheetDialogFragment {
                     budget.setText(dollarFormat.format(newBudget));
 
                     // Get the current week number
-                    Calendar calendar = new GregorianCalendar();
-                    Date trialTime = new Date();
-                    calendar.setTime(trialTime);
-                    int week_name = Calendar.WEEK_OF_YEAR;
+                    Calendar now = Calendar.getInstance();
+                    int week_name = now.get(Calendar.WEEK_OF_YEAR);
 
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

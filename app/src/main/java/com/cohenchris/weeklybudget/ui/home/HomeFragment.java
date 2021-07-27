@@ -70,17 +70,24 @@ public class HomeFragment extends Fragment {
         // Determine whether or not to increase budget (if it's a new week)
         int lastWeek = sharedPreferences.getInt(WEEK, -1);
 
+        System.out.println("lastWeek = " + lastWeek);
+
         // Get the current week number
-        Calendar calendar = new GregorianCalendar();
-        Date trialTime = new Date();
-        calendar.setTime(trialTime);
-        int currWeek = Calendar.WEEK_OF_YEAR;
-        
+        Calendar now = Calendar.getInstance();
+        int currWeek = now.get(Calendar.WEEK_OF_YEAR);
+
+        System.out.println("currWeek = " + currWeek);
+
+
         double curr_balance = Double.longBitsToDouble(sharedPreferences.getLong(CURR_BALANCE, (long) 0.00));
         double curr_budget = Double.longBitsToDouble(sharedPreferences.getLong(CURR_BUDGET, (long) 0.00));
 
+        System.out.println("old balance = " + curr_balance);
+
         // add (budget * num weeks passed) to available funds
         curr_balance += (curr_budget * (currWeek - lastWeek));
+
+        System.out.println("new balance = " + curr_balance);
 
         // Create US currency locale
         Locale usa = new Locale("en", "US");
@@ -89,5 +96,9 @@ public class HomeFragment extends Fragment {
         // update current balance
         currentBalanceView.setText(dollarFormat.format(curr_balance));
 
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(CURR_BALANCE, Double.doubleToRawLongBits(curr_balance));
+        editor.putInt(WEEK, currWeek);
+        editor.apply();
     }
 }
