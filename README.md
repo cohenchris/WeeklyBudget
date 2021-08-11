@@ -1,12 +1,11 @@
 # WeeklyBudget
 
-<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">
-
 ![f-droid](https://img.shields.io/f-droid/v/com.cohenchris.weeklybudget.svg)
-
 ![github](https://img.shields.io/github/release/cohenchris/WeeklyBudget.svg?logo=github)
 
-
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.cohenchris.weeklybudget/)
 
 This is a budgeting app designed for people who have a set weekly budget.
 
