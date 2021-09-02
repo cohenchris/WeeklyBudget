@@ -1,6 +1,6 @@
 # WeeklyBudget
 
-<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">](https://f-droid.org/en/packages/com.cohenchris.weeklybudget)
 
 ![f-droid](https://img.shields.io/f-droid/v/com.cohenchris.weeklybudget.svg)
 
