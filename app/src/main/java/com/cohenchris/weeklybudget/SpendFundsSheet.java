@@ -19,12 +19,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 
 public class SpendFundsSheet extends BottomSheetDialogFragment {
     private TextInputEditText fundsToRemove;
     private TextView amount;
-    private Button spendFunds;
-    private TextView budget;
 
     private String curr_balance;
 
@@ -33,11 +32,10 @@ public class SpendFundsSheet extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setStyle(STYLE_NORMAL, R.style.BottomSheet);
         View view = inflater.inflate(R.layout.spend_funds_bottomsheet, container, false);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        spendFunds = view.findViewById(R.id.button4);
-        amount = getActivity().findViewById(R.id.textView);
-        budget = getActivity().findViewById(R.id.textView7);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        Button spendFunds = view.findViewById(R.id.button4);
+        amount = requireActivity().findViewById(R.id.textView);
+        TextView budget = requireActivity().findViewById(R.id.textView7);
         fundsToRemove = view.findViewById(R.id.inputText);
 
         // Create US currency locale
@@ -47,11 +45,11 @@ public class SpendFundsSheet extends BottomSheetDialogFragment {
         spendFunds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fundsToRemove.getText().toString().length() == 0){
+                if(Objects.requireNonNull(fundsToRemove.getText()).toString().length() == 0){
                     fundsToRemove.setText("0");
                 }
                 try {
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     double toRemove = Double.parseDouble(fundsToRemove.getText().toString().replaceAll(",", ".").replaceAll("$", ""));

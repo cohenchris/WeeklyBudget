@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="17dp"
-        android:text="Set Budget"
+        android:text="Set"
         app:icon="@drawable/ic_attach_money_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,9 +58,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button6">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,9 +21,6 @@ import com.cohenchris.weeklybudget.SpendFundsSheet;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.Currency;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment {
@@ -34,12 +31,10 @@ public class HomeFragment extends Fragment {
     public static final String CURR_BALANCE = "currBalance";
     public static final String CURR_BUDGET = "currBudget";
     public static final String WEEK = "weekOfBudget";
-    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         currentBalanceView = root.findViewById(R.id.textView);
         final Button addFundsButton = root.findViewById(R.id.button2);
@@ -48,14 +43,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AddFundsSheet addFundsDialog = new AddFundsSheet();
-                addFundsDialog.show(getActivity().getSupportFragmentManager(), "addFundsDialogBox");
+                addFundsDialog.show(requireActivity().getSupportFragmentManager(), "addFundsDialogBox");
             }
         });
         spendFundsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SpendFundsSheet  spendFundsDialog = new SpendFundsSheet();
-                spendFundsDialog.show(getActivity().getSupportFragmentManager(), "spendFundsDialogBox");
+                spendFundsDialog.show(requireActivity().getSupportFragmentManager(), "spendFundsDialogBox");
             }
         });
 
@@ -65,7 +60,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void loadData() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
         // Determine whether or not to increase budget (if it's a new week)
         int lastWeek = sharedPreferences.getInt(WEEK, -1);

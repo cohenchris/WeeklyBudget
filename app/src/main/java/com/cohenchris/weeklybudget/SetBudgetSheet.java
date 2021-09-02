@@ -23,9 +23,9 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class SetBudgetSheet extends BottomSheetDialogFragment {
-    private Button setBudget;
     private TextInputEditText budgetEditText;
     private TextView budget;
 
@@ -39,8 +39,8 @@ public class SetBudgetSheet extends BottomSheetDialogFragment {
         setStyle(STYLE_NORMAL, R.style.BottomSheet);
         View view = inflater.inflate(R.layout.budget_bottomsheet, container, false);
         budgetEditText = view.findViewById(R.id.inputtext2);
-        setBudget = view.findViewById(R.id.button6);
-        budget = getActivity().findViewById(R.id.textView7);
+        Button setBudget = view.findViewById(R.id.button6);
+        budget = requireActivity().findViewById(R.id.textView7);
 
         // Create US currency locale
         Locale usa = new Locale("en", "US");
@@ -49,7 +49,7 @@ public class SetBudgetSheet extends BottomSheetDialogFragment {
         setBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(budgetEditText.getText().toString().length() == 0) {
+                if(Objects.requireNonNull(budgetEditText.getText()).toString().length() == 0) {
                     budgetEditText.setText("0");
                 }
                 try {
@@ -61,7 +61,7 @@ public class SetBudgetSheet extends BottomSheetDialogFragment {
                     Calendar now = Calendar.getInstance();
                     int week_name = now.get(Calendar.WEEK_OF_YEAR);
 
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     // update budget in the sharedPreferences

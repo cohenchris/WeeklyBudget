@@ -22,11 +22,11 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AddFundsSheet extends BottomSheetDialogFragment {
     private TextInputEditText fundsToAdd;
     private TextView amount;
-    private Button addFunds;
 
     private String text;
 
@@ -38,8 +38,8 @@ public class AddFundsSheet extends BottomSheetDialogFragment {
         setStyle(STYLE_NORMAL, R.style.BottomSheet);
         View view = inflater.inflate(R.layout.add_funds_bottomsheet, container, false);
 
-        addFunds = view.findViewById(R.id.button);
-        amount = getActivity().findViewById(R.id.textView);
+        Button addFunds = view.findViewById(R.id.button);
+        amount = requireActivity().findViewById(R.id.textView);
         fundsToAdd = view.findViewById(R.id.textInputEditText2);
 
         // Create US currency locale
@@ -49,11 +49,11 @@ public class AddFundsSheet extends BottomSheetDialogFragment {
         addFunds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fundsToAdd.getText().toString().length() == 0) {
+                if(Objects.requireNonNull(fundsToAdd.getText()).toString().length() == 0) {
                     fundsToAdd.setText("0");
                 }
                 try {
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     System.out.println(fundsToAdd.getText().toString().replaceAll(",", "."));
