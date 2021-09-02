@@ -1,0 +1,1 @@
+When adjusting budget, current balance is no longer replaced by the new budget.

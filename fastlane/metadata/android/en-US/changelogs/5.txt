@@ -1,0 +1,1 @@
+Fixed automated weekly budget addition.

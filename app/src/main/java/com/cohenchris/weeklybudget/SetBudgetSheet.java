@@ -64,10 +64,8 @@ public class SetBudgetSheet extends BottomSheetDialogFragment {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    // update balance in the sharedPreferences
+                    // update budget in the sharedPreferences
                     editor.putLong(CURR_BUDGET, Double.doubleToRawLongBits(newBudget));
-                    // overwrite current balance with the newly updated budget
-                    editor.putLong(CURR_BALANCE, Double.doubleToRawLongBits(newBudget));
 
                     editor.putInt(WEEK, week_name);
                     editor.apply();
